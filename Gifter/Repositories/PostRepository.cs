@@ -161,14 +161,19 @@ namespace Gifter.Repositories
             }
         }
 
-
+        
+        // The interface is implemented here though
         public List<Post> GetAllWithComments()
         {
+            // using ADO.NET to communciate directly with the SQL
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
+                    // Joining Comment (c) table "ON" the relationship defined, to/"FROM" the POST (p) table
+                    // Same with UserProfile table because thats where the Foreign keys and Primary keys relate
+                    // The "AS" keyword acts like a variable name to referrence later
                     cmd.CommandText = @"
                 SELECT p.Id AS PostId, p.Title, p.Caption, p.DateCreated AS PostDateCreated,
                        p.ImageUrl AS PostImageUrl, p.UserProfileId AS PostUserProfileId,
@@ -179,21 +184,31 @@ namespace Gifter.Repositories
                        c.Id AS CommentId, c.Message, c.UserProfileId AS CommentUserProfileId
                   FROM Post p
                        LEFT JOIN UserProfile up ON p.UserProfileId = up.id
-                       LEFT JOIN Comment c on c.PostId = p.id
+                       LEFT JOIN Comment c ON c.PostId = p.id
               ORDER BY p.DateCreated";
 
+
+                    // More commands from ADO.NET to read the db
                     var reader = cmd.ExecuteReader();
 
+                    // create a new object for list of type post
                     var posts = new List<Post>();
                     while (reader.Read())
                     {
+                        // call the GetInt method of the DbUtils class and pass two arguments below
                         var postId = DbUtils.GetInt(reader, "PostId");
+                        //that number gets sent back and stored in the postId box
 
+                        //creates a new variable, does somethings and brings it back 
                         var existingPost = posts.FirstOrDefault(p => p.Id == postId);
                         if (existingPost == null)
                         {
+                            // creating a new instance or object of type post
                             existingPost = new Post()
                             {
+                                // assigning the properties of the existingPost
+                                // by calling individual methods within DbUtils that take the arguments
+                                // passed into them here with the value we're looking for
                                 Id = postId,
                                 Title = DbUtils.GetString(reader, "Title"),
                                 Caption = DbUtils.GetString(reader, "Caption"),
@@ -214,8 +229,10 @@ namespace Gifter.Repositories
                             posts.Add(existingPost);
                         }
 
+                        // if the db is not null for the area CommentId, return that value
                         if (DbUtils.IsNotDbNull(reader, "CommentId"))
                         {
+                            // using DOT notation we add a new instance of type Comment to the existingPost object
                             existingPost.Comments.Add(new Comment()
                             {
                                 Id = DbUtils.GetInt(reader, "CommentId"),
@@ -226,6 +243,7 @@ namespace Gifter.Repositories
                         }
                     }
 
+                    // close the connection
                     reader.Close();
 
                     return posts;

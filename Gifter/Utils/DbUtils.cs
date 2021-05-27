@@ -37,8 +37,12 @@ namespace Gifter.Utils
         /// <param name="reader">A SqlDataReader that has not exhausted it's result set.</param>
         /// <param name="column">The name of the column from the result set refereed to by the reader.</param>
         /// <returns>The value of the given column.</returns>
+        
+        // GetInt takes the two as parameters.
+        // The reader and the column as string that "PostId" is from.
         public static int GetInt(SqlDataReader reader, string column)
         {
+            // this really just find the string passed in and finds its location (GetOrdinal) and return it as number.
             return reader.GetInt32(reader.GetOrdinal(column));
         }
 

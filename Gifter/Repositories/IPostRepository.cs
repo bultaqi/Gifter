@@ -10,7 +10,8 @@ namespace Gifter.Repositories
         void Add(Post post);
         void Update(Post post);
         void Delete(int id);
-
+        
+        // The interface defines the method for the repository here
         List<Post> GetAllWithComments();
     }
 }

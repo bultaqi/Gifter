@@ -58,14 +58,23 @@ namespace Gifter.Controllers
             return NoContent();
         }
 
+        //HttpGet refers to the RESTful method that refers to the path /GetWithComments
         [HttpGet("GetWithComments")]
+
+        //Method called when directed to the URL path above
         public IActionResult GetWithComments()
         {
+            // GetAllWithComments method called on the interface IPostRepository
+            // the big returned result or object "posts" is stored in another variable again "posts"
             var posts = _postRepository.GetAllWithComments();
+            //OK() is a big level abtraction from ASP.NET that allows us to see the result we just created
             return Ok(posts);
         }
     }
 }
+
+
+
 
 /*There are a couple of ways we might imagine getting a UserProfile object for a particular Post. Assuming we have a UserProfileRepository, we could do something like this in the PostController.
 
