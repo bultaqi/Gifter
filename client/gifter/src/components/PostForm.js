@@ -6,36 +6,34 @@ import "./Post"
 export const PostForm = () => {
     const { addPost } = useContext(PostContext)
 
+    const [post, setPost] = useState({
+      "id": 1,
+      "Title": "",
+      "ImageUrl": "",
+      "UserProfileId": 1,
+      "DateCreated": "2016-07-27T07:45:00Z"
+    });
 
-    //for edit, hold on to state of animal in this view
-    const [post, setPost] = useState({})
-
-
-    //when field changes, update state. This causes a re-render and updates the view.
-    //Controlled component
     const handleControlledInputChange = (event) => {
-      //When changing a state object or array,
-      //always create a copy make changes, and then set state.
       const newPost = { ...post }
-      //post is an object with properties.
-      //set the property to the new value
       newPost[event.target.name] = event.target.value
-      //update state
       setPost(newPost)
     }
 
     const handleSavePost = () => {
           addPost({
-              name: post.Title
+              Title: post.Title,
+              ImageUrl: post.ImageUrl,
+              UserProfileId: post.UserProfileId,
+              DateCreated: post.DateCreated
           })
-      }
+    }
     
     useEffect(() => {
         setPost(post)
     }, []);
 
-    //since state controlls this component, we no longer need
-    //useRef(null) or ref
+
 
     return (
       <form className="postForm">
@@ -43,18 +41,35 @@ export const PostForm = () => {
         <fieldset>
           <div className="form-group">
             <label htmlFor="postTitle">Title: </label>
-            <input type="text" id="postTitle" name="name" required autoFocus className="form-control"
+            <input type="text" id="postTitle" name="Title" required autoFocus className="form-control"
             placeholder="Post Title"
             onChange={handleControlledInputChange}
             defaultValue={post.Title}/>
           </div>
         </fieldset>
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="postImage">Image URL: </label>
+            <input type="text" id="postImage" name="ImageUrl" required autoFocus className="form-control"
+            placeholder="Image URL"
+            onChange={handleControlledInputChange}
+            defaultValue={post.ImageUrl}/>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="postDateTime">Date: </label>
+            <input type="date" id="postDateTime" name="DateCreated" required autoFocus className="form-control"
+            placeholder=""
+            onChange={handleControlledInputChange}
+            defaultValue={post.DateCreated}/>
+          </div>
+        </fieldset>
         <button className="btn btn-primary"
           onClick={event => {
-            event.preventDefault() // Prevent browser from submitting the form and refreshing the page
+            // event.preventDefault() // Prevent browser from submitting the form and refreshing the page
             handleSavePost()
-          }}>
-        {<>Add Post</>}</button>
+          }}><>Add Post</></button>
       </form>
     )
 }
