@@ -3,12 +3,14 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import ApplicationViews from "./components/ApplicationViews";
 import { PostProvider } from "./providers/PostProvider";
+import Header from "./components/Header";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <PostProvider>
+          <Header />
           <ApplicationViews />
         </PostProvider>
       </Router>
@@ -18,6 +20,8 @@ function App() {
 
 export default App;
 
+
+// The <Link> component is great for rendering links in our UI, but what about if we want to navigate the user programmatically? For example, on the Post form after a user submits and the new post gets successfully gets processed by our API, we'd like to maybe send the user back to the main feed. We can't do this with a simple <Link> component. Fortunately, the react router gives us an easy to use hook to allow us to do this called useHistory.
 
 
 // import React from "react";
