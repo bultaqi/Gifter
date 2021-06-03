@@ -3,7 +3,7 @@ import { PostContext } from "../providers/PostProvider"
 import "./Post"
 // import { useParams } from 'react-router-dom';
 
-export const PostForm = () => {
+const PostForm = () => {
     const { addPost } = useContext(PostContext)
 
     const [post, setPost] = useState({
@@ -73,3 +73,5 @@ export const PostForm = () => {
       </form>
     )
 }
+
+export default PostForm;
