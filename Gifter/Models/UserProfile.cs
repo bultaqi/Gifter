@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace Gifter.Models
 {
     public class UserProfile
     {
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(28, MinimumLength = 28)]
+        public string FirebaseUserId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -18,6 +23,7 @@ namespace Gifter.Models
 
         [Required]
         public DateTime DateCreated { get; set; }
-
+        public int UserTypeId { get; internal set; }
+        public UserType UserType { get; internal set; }
     }
 }

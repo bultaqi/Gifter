@@ -38,3 +38,4 @@ C:\Users\User-39\workspace\NewForce-C4\Server-Side\Gifter\Gifter\obj\Debug\netco
 C:\Users\User-39\workspace\NewForce-C4\Server-Side\Gifter\Gifter\obj\Debug\netcoreapp3.1\Gifter.dll
 C:\Users\User-39\workspace\NewForce-C4\Server-Side\Gifter\Gifter\obj\Debug\netcoreapp3.1\Gifter.pdb
 C:\Users\User-39\workspace\NewForce-C4\Server-Side\Gifter\Gifter\obj\Debug\netcoreapp3.1\Gifter.genruntimeconfig.cache
+C:\Users\User-39\workspace\NewForce-C4\Server-Side\Gifter\Gifter\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll

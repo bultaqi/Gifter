@@ -1,13 +1,18 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { UserProfileContext } from "../providers/UserProfileProvider";
+import Login from "./Login";
+import Register from "./Register";
 import PostList from "./PostList";
 import PostForm from "./PostForm";
 
 const ApplicationViews = () => {
+  const { isLoggedIn } = useContext(UserProfileContext);
+
   return (
     <Switch>
       <Route path="/" exact>
-        <PostList />
+          {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
       </Route>
 
       <Route path="/posts/add">
@@ -15,6 +20,14 @@ const ApplicationViews = () => {
       </Route>
 
       <Route path="/posts/:id">{/* TODO: Post Details Component */}</Route>
+
+      <Route path="/login">
+          <Login />
+      </Route>
+
+      <Route path="/register">
+          <Register />
+      </Route>
     </Switch>
   );
 };

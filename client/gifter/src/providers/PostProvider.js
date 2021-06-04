@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, createContext, useContext } from "react";
+import { UserProfileContext } from "./UserProfileProvider";
 
-export const PostContext = React.createContext();
+export const PostContext = createContext();
 
 export const PostProvider = (props) => {
+  const apiUrl = "/api/post";
+  const { getToken } = useContext(UserProfileContext);
+
   const [posts, setPosts] = useState([]);
   const [ searchTerms, setSearchTerms ] = useState("")
 
+  const refreshPosts = () =>
+    getToken().then((token) =>
+      fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(resp => resp.json())
+        .then(setPosts));
+  
   const getAllPosts = () => {
     return fetch("/api/post")
       .then((res) => res.json())
@@ -34,7 +48,7 @@ export const PostProvider = (props) => {
 
   return (
     <PostContext.Provider value={{ 
-      posts, getAllPosts, addPost, searchTerms, setSearchTerms, searchPosts, getPost
+      posts, getAllPosts, addPost, searchTerms, setSearchTerms, searchPosts, getPost, refreshPosts
     }}>
       {props.children}
     </PostContext.Provider>
